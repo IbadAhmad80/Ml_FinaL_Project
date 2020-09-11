@@ -30,6 +30,12 @@ finalDf = pd.concat([principalDf, dataFrame[['Survived']]], axis = 1)
 from sklearn.model_selection import train_test_split
 X_train, X_test, Y_train, Y_test = train_test_split(finalDf.drop('Survived',axis=1), finalDf['Survived'], test_size=0.2)
 
+# Balancing the Dataset using SEMOTE technique
+from imblearn.over_sampling import SMOTE
+smote = SMOTE()
+X_train, Y_train= smote.fit_sample(X_train.astype('float'),Y_train)
+
+
 #Normalizing data for KNN and ANN
 from sklearn.preprocessing import StandardScaler
 norm_whole_data= StandardScaler().fit_transform(finalDf.drop(['Survived'],axis=1))
